@@ -1,3 +1,16 @@
+# Loyalty Serveless
+
+Relax. It's not the next system that I've been working to be a millionaire. It's just a project to study AWS lambda and other services from AWS. 
+
+Why use NestJS? Because I consider nest a good framework for dependency injection, this make difference for the project? No, but I wanna see what happens when I use this with an existing big framework.
+
+```
+presentation --------- app ------- domain ------- infra
+cli                     |                            ^
+lambda <<               |____________________________|
+http
+```
+
 ## Rules
 
 ### User
