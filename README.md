@@ -25,3 +25,17 @@ http
 - Can get the extract
 - Can spend cashback
 - Cannot spend cashback if the balance is less than cashback spent
+
+
+## Project history study
+
+0 - How i started the project:
+```
+nest new loyaltyServeless
+cd loyaltyServeless 
+sls create --template aws-nodejs
+```
+
+For sure i deleted the handle.js and init work in the nestjs project. The main folder for serverless is `presentation/lambda`
+
+1 - The serverless framework is simple to deploy and test. I've been problems using next because in local using `SLS invoke local -f <myFn>` it's work but I have some problems using relative paths in the cloud.
