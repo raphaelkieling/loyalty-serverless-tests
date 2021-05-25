@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Cashback } from 'src/domain/cashback/Cashback';
-import { CPF } from 'src/domain/CPF';
-import { User } from 'src/domain/user/User';
-import { UserRepository } from 'src/domain/user/UserRepository';
+import { Cashback } from '../../domain/cashback/Cashback';
+import { CPF } from '../../domain/CPF';
+import { User } from '../../domain/user/User';
+import { UserRepository } from '../../domain/user/UserRepository';
 
 @Injectable()
 export class MemoryUserRepository implements UserRepository {

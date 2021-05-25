@@ -1,5 +1,5 @@
-import { GetWelcomeMessage } from 'src/domain/welcome/GetWelcomeMessage';
-import { bootstrap } from 'src/main';
+import { GetWelcomeMessage } from '../../domain/welcome/GetWelcomeMessage';
+import { bootstrap } from '../../main';
 
 export async function get() {
   const app = await bootstrap();

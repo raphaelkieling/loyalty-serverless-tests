@@ -77,12 +77,6 @@
         "LogGroupName": "/aws/lambda/serverless-loyalty-dev-welcome"
       }
     },
-    "ReceivePointsLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/serverless-loyalty-dev-receivePoints"
-      }
-    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -167,9 +161,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-loyalty/dev/1621882549758-2021-05-24T18:55:49.758Z/serverless-loyalty.zip"
+          "S3Key": "serverless/serverless-loyalty/dev/1621955315678-2021-05-25T15:08:35.678Z/serverless-loyalty.zip"
         },
-        "Handler": "dist/presenters/lambda/welcome.get",
+        "Handler": "_optimize/serverless-loyalty-dev-welcome/src/presenters/lambda/welcome.get",
         "Runtime": "nodejs12.x",
         "FunctionName": "serverless-loyalty-dev-welcome",
         "MemorySize": 1024,
@@ -185,49 +179,14 @@
         "WelcomeLogGroup"
       ]
     },
-    "ReceivePointsLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/serverless-loyalty/dev/1621882549758-2021-05-24T18:55:49.758Z/serverless-loyalty.zip"
-        },
-        "Handler": "dist/presenters/lambda/cashback.receivePoints",
-        "Runtime": "nodejs12.x",
-        "FunctionName": "serverless-loyalty-dev-receivePoints",
-        "MemorySize": 1024,
-        "Timeout": 6,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        }
-      },
-      "DependsOn": [
-        "ReceivePointsLogGroup"
-      ]
-    },
-    "WelcomeLambdaVersionIfiZc9DZbfZIfNKND3YCHaNFyCjtZz5SeRldhFFU": {
+    "WelcomeLambdaVersionzV9gWBm3vQHtE2sBkwwPzOYfYUBylYfQtQRsvYitLs8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "WelcomeLambdaFunction"
         },
-        "CodeSha256": "c6DHZ5FhJLiyCohhiBJ0qDH2UmaYOz5xlFdQ6LW8rlU="
-      }
-    },
-    "ReceivePointsLambdaVersionVt4N2XOrdcQcsH22oyOnlQAN6iJ31IVXLHyt0ZUU": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "ReceivePointsLambdaFunction"
-        },
-        "CodeSha256": "c6DHZ5FhJLiyCohhiBJ0qDH2UmaYOz5xlFdQ6LW8rlU="
+        "CodeSha256": "EJwcp6s9EAakdB9aeP0wuITXOs2PYswPYa+97wzYqwA="
       }
     },
     "ApiGatewayRestApi": {
@@ -252,33 +211,6 @@
           ]
         },
         "PathPart": "welcome",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceCashback": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "cashback",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceCashbackOrder": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceCashback"
-        },
-        "PathPart": "order",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -327,50 +259,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayMethodCashbackOrderPost": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "POST",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourceCashbackOrder"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "ReceivePointsLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayDeployment1621882529049": {
+    "ApiGatewayDeployment1621955122914": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -379,8 +268,7 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodWelcomeGet",
-        "ApiGatewayMethodCashbackOrderPost"
+        "ApiGatewayMethodWelcomeGet"
       ]
     },
     "WelcomeLambdaPermissionApiGateway": {
@@ -389,43 +277,6 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "WelcomeLambdaFunction",
-            "Arn"
-          ]
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition"
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region"
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":",
-              {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "/*/*"
-            ]
-          ]
-        }
-      }
-    },
-    "ReceivePointsLambdaPermissionApiGateway": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "ReceivePointsLambdaFunction",
             "Arn"
           ]
         },
@@ -470,19 +321,10 @@
     "WelcomeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "WelcomeLambdaVersionIfiZc9DZbfZIfNKND3YCHaNFyCjtZz5SeRldhFFU"
+        "Ref": "WelcomeLambdaVersionzV9gWBm3vQHtE2sBkwwPzOYfYUBylYfQtQRsvYitLs8"
       },
       "Export": {
         "Name": "sls-serverless-loyalty-dev-WelcomeLambdaFunctionQualifiedArn"
-      }
-    },
-    "ReceivePointsLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "ReceivePointsLambdaVersionVt4N2XOrdcQcsH22oyOnlQAN6iJ31IVXLHyt0ZUU"
-      },
-      "Export": {
-        "Name": "sls-serverless-loyalty-dev-ReceivePointsLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

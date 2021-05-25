@@ -2,6 +2,11 @@ service: serverless-loyalty
 
 frameworkVersion: "2"
 
+plugins:
+  - serverless-plugin-typescript
+  - serverless-plugin-optimize
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -11,14 +16,14 @@ provider:
 
 functions:
   welcome:
-    handler: dist/presenters/lambda/welcome.get
+    handler: src/presenters/lambda/welcome.get
     events:
       - http:
           path: welcome
           method: get
 
   receivePoints:
-    handler: dist/presenters/lambda/cashback.receivePoints
+    handler: src/presenters/lambda/cashback.receivePoints
     events:
       - http:
           path: cashback/order
