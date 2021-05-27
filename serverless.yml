@@ -9,21 +9,20 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  lambdaHashingVersion: 20201221
+  runtime: nodejs14.x
   stage: dev
   region: us-east-1
 
 functions:
   welcome:
-    handler: src/presenters/lambda/welcome.get
+    handler: src/presenters/lambda/welcome/handler.get
     events:
       - http:
           path: welcome
           method: get
 
   receivePoints:
-    handler: src/presenters/lambda/cashback.receivePoints
+    handler: src/presenters/lambda/cashback/handler.receivePoints
     events:
       - http:
           path: cashback/order

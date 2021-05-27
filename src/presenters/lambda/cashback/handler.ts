@@ -1,6 +1,6 @@
-import { ReceivePoints } from 'src/domain/cashback/ReceivePoints';
-import { CPF } from 'src/domain/CPF';
-import { bootstrap } from 'src/main';
+import { ReceivePoints } from '../../../domain/cashback/ReceivePoints';
+import { CPF } from '../../../domain/CPF';
+import { bootstrap } from '../../../main';
 
 export async function receivePoints() {
   const app = await bootstrap();
@@ -10,6 +10,6 @@ export async function receivePoints() {
 
   return {
     statusCode: 200,
-    body: result,
+    body: JSON.stringify(result),
   };
 }

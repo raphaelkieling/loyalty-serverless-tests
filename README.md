@@ -39,3 +39,8 @@ sls create --template aws-nodejs
 For sure i deleted the handle.js and init work in the nestjs project. The main folder for serverless is `presentation/lambda`
 
 1 - The serverless framework is simple to deploy and test. I've been problems using next because in local using `SLS invoke local -f <myFn>` it's work but I have some problems using relative paths in the cloud.
+
+2 - I resolved the problems using some plugins like:
+- serverless-plugin-typescript
+- serverless-plugin-optimize
+- serverless-offline

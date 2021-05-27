@@ -3,6 +3,7 @@ import { CPF } from '../../domain/CPF';
 import { UserRepository } from '../../domain/user/UserRepository';
 import { ReceivePoints } from '../../domain/cashback/ReceivePoints';
 import { Inject, Injectable } from '@nestjs/common';
+import { User } from '../../domain/user/user';
 
 @Injectable()
 export class ReceivePointsService implements ReceivePoints {
@@ -11,10 +12,15 @@ export class ReceivePointsService implements ReceivePoints {
   ) {}
 
   async handle(cpf: CPF, orderValue: number): Promise<Cashback> {
-    const user = await this.userRepository.getUserByCPF(cpf);
+    let user: User | null = await this.userRepository.getUserByCPF(cpf);
 
-    console.log(user);
+    const currentReceivedCashback = new Cashback(orderValue);
+    if (!user) {
+      user = await this.userRepository.createUser(
+        new User('', cpf, currentReceivedCashback),
+      );
+    }
 
-    return new Cashback(orderValue);
+    return currentReceivedCashback;
   }
 }
